@@ -1,5 +1,10 @@
-# Use an official Python runtime as a parent image
+# Use Python 3.11 slim as the base image
 FROM python:3.11-slim
+
+# Install required packages including SQLite3
+RUN apt-get update && apt-get install -y \
+    sqlite3 libsqlite3-dev gcc \
+    && apt-get clean
 
 # Set the working directory in the container
 WORKDIR /app
@@ -13,5 +18,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of your application code into the container
 COPY . .
 
-# Command to run your application (replace 'your_script.py' with your main script)
+# Command to run your application
 CMD ["python", "vectordb.py"]
